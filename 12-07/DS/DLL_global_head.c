@@ -102,15 +102,26 @@ void add_empty(int data)
 }
 void add_beg(int data)
 {
+	if(head==NULL)
+	{
+		add_empty(data);
+		main();
+	}
 	struct node *new=NULL;
 	new=(struct node *)malloc(sizeof(struct node));
 	new->data=data;
 	new->prev=NULL;
 	new->next=head;
+	head->prev=new;
 	head=new;
 }
 void add_last(int data)
 {
+	if(head==NULL)
+	{
+		add_empty(data);
+		main();
+	}
 	struct node *new=NULL,*ptr=head;
 	new=(struct node*)malloc(sizeof(struct node));
 	new->data=data;
@@ -174,6 +185,11 @@ void search(int item)
 }
 void add_after(int data,int item)
 {
+	if(head==NULL)
+	{
+		printf("list is empty\n");
+		main();
+	}
 	struct node *ptr,*new=NULL;
 	new=(struct node *)malloc(sizeof(struct node));
 	new->data=data;
@@ -234,6 +250,22 @@ void delete(int item)
 		main();
 	}
 	struct node *temp=NULL,*ptr=NULL;
+	if(head->next==NULL)
+	{
+		if(head->data==item)
+		{
+			temp=head;
+			head=NULL;
+			free(temp);
+			main();
+		}
+		else
+		{
+			printf("%d element is not present \n",item);
+			main();
+		}
+	}
+
 	if(head->data==item)
 	{
 		temp=head;

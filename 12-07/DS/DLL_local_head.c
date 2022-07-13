@@ -85,7 +85,7 @@ struct node *create_list(struct node *head)
 	printf("enter the element  which u want to add\n");
 	scanf("%d",&data);
 	head=add_empty(head,data);
-	for(i=1;i<n;i++)
+	for(i=2;i<=n;i++)
 	{
 		printf("enter the element which u want to add\n");
 		scanf("%d",&data);
@@ -105,6 +105,11 @@ struct node * add_empty(struct node *head,int data)
 }
 struct node *add_beg(struct node *head,int data)
 {
+	if(head==NULL)
+	{
+		head=add_empty(head,data);
+		return head;
+	}
 	struct node *new=NULL;
 	new=(struct node *)malloc(sizeof(struct node));
 	new->data=data;
@@ -115,6 +120,11 @@ struct node *add_beg(struct node *head,int data)
 }
 struct node * add_last(struct node *head,int data)
 {
+	if(head==NULL)
+	{
+		head=add_empty(head,data);
+		return head;
+	}
 	struct node *new=NULL,*ptr=head;
 	new=(struct node*)malloc(sizeof(struct node));
 	new->data=data;
@@ -130,7 +140,7 @@ void display(struct node *head)
 	if(head==NULL)
 	{
 		printf("list is empty\n");
-		main();
+		return;
 	}
 	struct node *ptr=head;
 	while(ptr!=NULL)
@@ -179,6 +189,11 @@ void search(struct node *head,int item)
 }
 struct node * add_after(struct node *head,int data,int item)
 {
+	if(head==NULL)
+	{
+		printf("list is empty\n");
+		return head;
+	}
 	struct node *ptr,*new=NULL;
 	new=(struct node *)malloc(sizeof(struct node));
 	new->data=data;
@@ -237,9 +252,24 @@ struct node * delete(struct node *head,int item)
 	if(head==NULL)
 	{
 		printf("list is empty\n");
-		main();
+		return head;
 	}
 	struct node *temp=NULL,*ptr=NULL;
+	if(head->next==NULL)
+	{
+		if(head->data==item)
+		{
+			temp=head;
+			head=NULL;
+			free(temp);
+			return temp;
+		}
+		else
+		{
+			printf("%d element is not found\n",item);
+			return head;
+		}
+	}
 	if(head->data==item)
 	{
 		temp=head;
@@ -248,7 +278,7 @@ struct node * delete(struct node *head,int item)
 		free(temp);
 		return head;
 	}
-	ptr=head;
+	ptr=head->next;
 	while(ptr->next!=NULL)
 	{
 		if(ptr->data==item)
